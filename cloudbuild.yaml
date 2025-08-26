@@ -1,0 +1,23 @@
+steps:
+  # Step for main branch
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "$BRANCH_NAME" == "main" ]]; then
+          echo "Running action for main branch!"
+        fi
+
+  # Step for feature branches
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "$BRANCH_NAME" == feature/* ]]; then
+          echo "Running action for feature branch: $BRANCH_NAME"
+        fi
+
+options:
+  substitution_option: 'ALLOW_LOOSE'
